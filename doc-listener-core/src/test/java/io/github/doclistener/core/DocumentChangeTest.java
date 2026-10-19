@@ -28,4 +28,10 @@ class DocumentChangeTest {
             DocumentChange.Type.DELETE, false, null, 1234);
         assertThat(JsonParser.parseString(event.toJson()).getAsJsonObject().get("source").isJsonNull()).isTrue();
     }
+    @Test void separatesSameIdOnDifferentRoutingShards() {
+        var first = event(3);
+        var second = new DocumentChange(first.index(), first.indexUuid(), 9, first.id(), "其他routing", 3, 7,
+            first.type(), first.created(), first.source(), first.timestamp());
+        assertThat(first.key()).isNotEqualTo(second.key());
+    }
 }

@@ -21,7 +21,7 @@ starter 的引入发生在插件工程编译阶段；修改 starter 依赖后重
 
 仅处理 PRIMARY 来源且引擎执行成功的文档写入，以及确实找到文档的成功删除。支持按索引匹配规则筛选。新增与覆盖使用 INDEX 事件和 created 标记，不把覆盖写入误称为用户调用了 Update API。
 
-事件包含索引名与 UUID、分片 ID、文档 ID、routing（操作可用时）、seqNo、primaryTerm、事件类型、写入后的 source（写入事件）、时间。使用索引 UUID、分片 ID 和 primaryTerm、seqNo 组合形成事件标识，Kafka key 使用文档所属索引及 ID，供消费端去重和分区。
+事件包含索引名与 UUID、分片 ID、文档 ID、routing（操作可用时）、seqNo、primaryTerm、事件类型、写入后的 source（写入事件）、时间。使用索引 UUID、分片 ID 和 primaryTerm、seqNo 组合形成事件标识，Kafka key 使用索引 UUID、分片 ID 和文档 ID，供消费端去重和分区。
 
 不提供旧文档内容；noop 更新、删除索引、历史文档回填不在范围内。主分片本地成功不等于客户端请求最终成功，不等于已经 refresh。
 

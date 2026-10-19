@@ -21,8 +21,8 @@ public record DocumentChange(String index, String indexUuid, int shardId, String
     /** 任期参与标识，避免故障切换后同一 seqNo 的不同操作被误判为重复。 */
     public String eventId() { return indexUuid + ":" + shardId + ":" + primaryTerm + ":" + seqNo; }
 
-    /** 数组编码避免索引名、文档 ID 含分隔符时出现 key 歧义。 */
-    public String key() { return JSON.toJson(new String[] { indexUuid, id }); }
+    /** 数组编码避免分隔符歧义；同 ID 可因不同 routing 落入不同分片，所以分片也参与 key。 */
+    public String key() { return JSON.toJson(new Object[] { indexUuid, shardId, id }); }
 
     /** 后台线程执行序列化；保留 source 中的大整数精度和嵌套 JSON 结构。 */
     public String toJson() {

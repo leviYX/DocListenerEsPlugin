@@ -101,7 +101,7 @@ export ES_URL=http://localhost:9200
 
 `type` 为 `INDEX` 或 `DELETE`；`created` 表示本次引擎写入是否创建文档，不表示用户一定调用了哪个 REST API。`source` 是本次写入快照，删除事件为 null；删除回调也拿不到 routing。`timestamp` 是节点回调的毫秒时间，不用于全局排序。`seqNo` 和 `primaryTerm` 取引擎执行结果，不能用写入前尚未分配的序号。
 
-Kafka key 为 `[indexUuid,id]` 的 JSON 数组。同一文档通常进入同一分区，但增减 Kafka topic 分区后分区映射可能改变。多个节点回调、并发写入及分片切换不提供跨节点的到达顺序保证。消费端按业务需求使用 seqNo/primaryTerm 处理重复及过期操作；主任期纳入 eventId，避免故障切换时同序号不同操作碰撞。
+Kafka key 为 `[indexUuid,shardId,id]` 的 JSON 数组。同 ID 可因不同 routing 存在于不同分片，消费端必须将分片纳入文档身份；删除事件无法提供 routing，但保留 shardId。同一文档通常进入同一分区，但增减 Kafka topic 分区后分区映射可能改变。多个节点回调、并发写入及分片切换不提供跨节点的到达顺序保证。消费端按业务需求使用 seqNo/primaryTerm 处理重复及过期操作；主任期纳入 eventId，避免故障切换时同序号不同操作碰撞。
 
 ## 投递语义和运行边界
 
@@ -129,7 +129,7 @@ public class XxxSinkAutoConfiguration {
 }
 ```
 
-在该模块的 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` 写入配置类全限定名，再把 starter 依赖加进 `doc-listener-es-plugin/pom.xml`。`send` 返回外部确认的 `CompletionStage<Void>`，`close(Duration)` 必须遵守关闭预算。不要阻塞无限久，不要由 Sink 修改 ES 文档（会造成循环通知），不要引入重复日志实现。
+在该模块的 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` 写入配置类全限定名，再把 starter 依赖加进 `doc-listener-es-plugin/pom.xml`。`send` 返回外部确认的 `CompletionStage<Void>`，`close(Duration)` 必须遵守关闭预算，并容忍关闭超时后与尚未返回的 `send` 短暂并发。不要阻塞无限久，不要由 Sink 修改 ES 文档（会造成循环通知），不要引入重复日志实现。
 
 多个 Sink Bean 同时启用时，每个事件都发给所有 Sink。只启用其他系统时可禁用 Kafka；监听启用但没有任何 Sink 会在启动时失败，避免静默丢失。通过 `./mvnw install` 可将模块安装到本机 Maven 仓库，供自己的 starter 工程依赖。
 

@@ -1,0 +1,6 @@
+[2026-10-19T12:02:59,049][INFO ][i.g.d.e.DocListenerPlugin] [doc-listener-smoke-1] doc-listener 已启动，enabled=true，配置文件=/tmp/doc-listener-es-8.16.1-smoke/config/doc-listener.properties
+[2026-10-19T12:03:50,933][WARN ][i.g.d.c.AsyncDispatcher  ] [doc-listener-smoke-1] doc-listener 投递失败，sink=KafkaChangeSink，累计 failed=1，异常类型=ExecutionException
+[2026-10-19T12:03:51,940][WARN ][i.g.d.c.AsyncDispatcher  ] [doc-listener-smoke-1] doc-listener 投递失败，sink=KafkaChangeSink，累计 failed=2，异常类型=ExecutionException
+[2026-10-19T12:03:53,946][WARN ][i.g.d.c.AsyncDispatcher  ] [doc-listener-smoke-1] doc-listener 投递失败，sink=KafkaChangeSink，累计 failed=4，异常类型=ExecutionException
+[2026-10-19T12:03:59,065][INFO ][i.g.d.c.AsyncDispatcher  ] [doc-listener-smoke-1] doc-listener stats=Stats[accepted=6, sent=0, failed=6, dropped=0, queued=0]
+[2026-10-19T12:04:49,299][INFO ][i.g.d.c.AsyncDispatcher  ] [doc-listener-smoke-1] doc-listener 已关闭，stats=Stats[accepted=6, sent=0, failed=6, dropped=0, queued=0]

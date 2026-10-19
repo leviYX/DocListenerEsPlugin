@@ -1,0 +1,19 @@
+-> removing [doc-listener]...
+-> Installing file:///Users/levi/develop/project/my/es/plugin/docListener/doc-listener-es-plugin/target/doc-listener-1.0.0.zip
+-> Downloading file:///Users/levi/develop/project/my/es/plugin/docListener/doc-listener-es-plugin/target/doc-listener-1.0.0.zip
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@     WARNING: plugin requires additional permissions     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+* java.lang.RuntimePermission accessDeclaredMembers
+* java.lang.RuntimePermission getClassLoader
+* java.lang.RuntimePermission setContextClassLoader
+* java.lang.reflect.ReflectPermission suppressAccessChecks
+* java.net.SocketPermission * connect,resolve
+* java.util.PropertyPermission * read
+* javax.management.MBeanPermission * registerMBean,unregisterMBean,getAttribute,getObjectInstance,isInstanceOf,queryNames
+* javax.management.MBeanServerPermission createMBeanServer
+* javax.management.MBeanTrustPermission register
+See https://docs.oracle.com/javase/8/docs/technotes/guides/security/permissions.html
+for descriptions of what these permissions allow and the associated risks.
+-> Installed doc-listener
+-> Please restart Elasticsearch to activate any plugins installed
