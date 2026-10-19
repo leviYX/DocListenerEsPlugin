@@ -1,0 +1,7 @@
+**/target/
+.idea/
+*.iml
+.DS_Store
+.tools/
+.mvn/wrapper/maven-wrapper.jar
+**/__pycache__/

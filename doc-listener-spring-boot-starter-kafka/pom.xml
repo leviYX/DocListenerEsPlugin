@@ -1,0 +1,7 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion>
+<parent><groupId>io.github.doclistener</groupId><artifactId>doc-listener-parent</artifactId><version>1.0.0</version></parent>
+<artifactId>doc-listener-spring-boot-starter-kafka</artifactId><dependencies><dependency><groupId>io.github.doclistener</groupId><artifactId>doc-listener-spring-boot-autoconfigure</artifactId><version>${project.version}</version></dependency><dependency><groupId>org.apache.kafka</groupId><artifactId>kafka-clients</artifactId><exclusions>
+<!-- 首版只支持 none/gzip，避免在 ES 进程中加载压缩本地库。 -->
+<exclusion><groupId>com.github.luben</groupId><artifactId>zstd-jni</artifactId></exclusion><exclusion><groupId>org.lz4</groupId><artifactId>lz4-java</artifactId></exclusion><exclusion><groupId>org.xerial.snappy</groupId><artifactId>snappy-java</artifactId></exclusion></exclusions></dependency>
+<dependency><groupId>org.apache.logging.log4j</groupId><artifactId>log4j-slf4j2-impl</artifactId><scope>runtime</scope><exclusions><exclusion><groupId>org.apache.logging.log4j</groupId><artifactId>log4j-core</artifactId></exclusion><exclusion><groupId>org.apache.logging.log4j</groupId><artifactId>log4j-api</artifactId></exclusion></exclusions></dependency>
+<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-test</artifactId><scope>test</scope></dependency></dependencies></project>

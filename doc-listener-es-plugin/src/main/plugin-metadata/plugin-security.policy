@@ -1,0 +1,14 @@
+// Spring 反射与类加载、Kafka 后台线程及网络连接需要的权限。
+// 不授予 AllPermission。网络目标可在部署前收紧为实际 broker 地址及端口。
+grant {
+  permission java.lang.RuntimePermission "getClassLoader";
+  permission java.lang.RuntimePermission "setContextClassLoader";
+  permission java.lang.RuntimePermission "accessDeclaredMembers";
+  permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+  permission java.util.PropertyPermission "*", "read";
+  // Kafka 客户端始终注册 app-info MBean，即便禁用常规 JMX reporter 也需要这些权限。
+  permission javax.management.MBeanServerPermission "createMBeanServer";
+  permission javax.management.MBeanTrustPermission "register";
+  permission javax.management.MBeanPermission "*", "registerMBean,unregisterMBean,getAttribute,getObjectInstance,isInstanceOf,queryNames";
+  permission java.net.SocketPermission "*", "connect,resolve";
+};
